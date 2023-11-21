@@ -4,17 +4,21 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/user.entity';
 import { UserModule } from './user/user.module';
+import { config } from 'dotenv';
+
+// 读取 .env 文件
+const envConfig = config();
 
 @Module({
   imports: [
     UserModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: '127.0.0.1',
-      port: 3306,
-      username: 'root',
-      password: 'Xy&278721524',
-      database: 'efficiencydb',
+      host: envConfig.parsed.DB_HOST,
+      port: Number(envConfig.parsed.DB_PORT),
+      username: envConfig.parsed.DB_USER,
+      password: envConfig.parsed.DB_PASSWORD,
+      database: envConfig.parsed.DB_DB,
       entities: [User],
       synchronize: true,
     }),
