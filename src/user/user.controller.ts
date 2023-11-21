@@ -30,9 +30,6 @@ export class UserController {
       orderBy: query.orderBy,
       skip: Number((query.current - 1) * query.pageSize),
       take: Number(query.pageSize),
-      relations: {
-        roles: true,
-      },
     };
 
     if (!query.sortBy || !query.orderBy) {
@@ -44,8 +41,8 @@ export class UserController {
 
     return {
       data: {
-        users,
-        total,
+        list: users,
+        count: total,
       },
       code: '200',
       message: '',
