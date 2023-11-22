@@ -13,7 +13,8 @@ const envConfig = config();
   imports: [
     UserModule,
     TypeOrmModule.forRoot({
-      type: 'mysql',
+      ssl: Boolean(envConfig.parsed.DB_SSL),
+      type: 'postgres',
       host: envConfig.parsed.DB_HOST,
       port: Number(envConfig.parsed.DB_PORT),
       username: envConfig.parsed.DB_USER,
