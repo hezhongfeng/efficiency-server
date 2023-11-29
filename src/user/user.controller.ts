@@ -13,6 +13,7 @@ import { ListAllEntities, deleteIds } from 'src/common/dto';
 import { UserService } from './user.service';
 import { CustomResponse } from 'src/common/http.response';
 import { User } from './user.entity';
+import { Like } from 'typeorm';
 
 /**
  * 用户管理 API
@@ -30,6 +31,9 @@ export class UserController {
       orderBy: query.orderBy,
       skip: Number((query.current - 1) * query.pageSize),
       take: Number(query.pageSize),
+      where: {
+        firstName: Like(`%${query.like || ''}%`),
+      },
     };
 
     if (!query.sortBy || !query.orderBy) {
