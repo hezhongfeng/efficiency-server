@@ -3,7 +3,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/user.entity';
+import { Work } from './work/work.entity';
 import { UserModule } from './user/user.module';
+import { WorkModule } from './work/work.module';
 import { config } from 'dotenv';
 
 // 读取 .env 文件
@@ -12,6 +14,7 @@ const envConfig = config();
 @Module({
   imports: [
     UserModule,
+    WorkModule,
     TypeOrmModule.forRoot({
       ssl: Boolean(envConfig.parsed.DB_SSL),
       type: 'postgres',
@@ -20,7 +23,7 @@ const envConfig = config();
       username: envConfig.parsed.DB_USER,
       password: envConfig.parsed.DB_PASSWORD,
       database: envConfig.parsed.DB_DB,
-      entities: [User],
+      entities: [User, Work],
       synchronize: true,
     }),
   ],
