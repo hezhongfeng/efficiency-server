@@ -26,6 +26,8 @@ export class UserController {
   async getUsers(
     @Query(new ValidationPipe({ transform: true })) query: ListAllEntities,
   ): Promise<CustomResponse> {
+    console.log(query);
+
     const option = {
       sortBy: query.sortBy,
       orderBy: query.orderBy,
@@ -33,8 +35,17 @@ export class UserController {
       take: Number(query.pageSize),
       where: {
         firstName: Like(`%${query.like || ''}%`),
+        isActive: {
+          '0': null,
+          '1': true,
+          '2': false,
+        }[(query as any).isActive],
       },
     };
+
+    if ((query as any).isActive === '0') {
+      delete option.where.isActive;
+    }
 
     if (!query.sortBy || !query.orderBy) {
       option.sortBy = 'createdAt';
