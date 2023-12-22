@@ -26,8 +26,6 @@ export class UserController {
   async getUsers(
     @Query(new ValidationPipe({ transform: true })) query: ListAllEntities,
   ): Promise<CustomResponse> {
-    console.log(query);
-
     const option = {
       sortBy: query.sortBy,
       orderBy: query.orderBy,
