@@ -52,4 +52,14 @@ class UpdateUserDTO {
   isActive: boolean;
 }
 
-export { CreateUserDTO, UpdateUserDTO };
+class ActiveUserDTO {
+  @IsDefined({
+    message: '缺少 isActive 字段',
+  })
+  @IsBoolean({
+    message: 'isActive 必须为布尔值',
+  })
+  isActive: boolean;
+}
+
+export { CreateUserDTO, UpdateUserDTO, ActiveUserDTO };

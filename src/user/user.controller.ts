@@ -8,7 +8,7 @@ import {
   Put,
   ValidationPipe,
 } from '@nestjs/common';
-import { CreateUserDTO, UpdateUserDTO } from './user.dto';
+import { CreateUserDTO, UpdateUserDTO, ActiveUserDTO } from './user.dto';
 import { ListAllEntities, deleteIds } from 'src/common/dto';
 import { UserService } from './user.service';
 import { CustomResponse } from 'src/common/http.response';
@@ -27,8 +27,6 @@ export class UserController {
     @Query(new ValidationPipe({ transform: true })) query: ListAllEntities,
   ): Promise<CustomResponse> {
     const option = {
-      sortBy: query.sortBy,
-      orderBy: query.orderBy,
       skip: Number((query.current - 1) * query.pageSize),
       take: Number(query.pageSize),
       where: {
@@ -43,11 +41,6 @@ export class UserController {
 
     if ((query as any).isActive === '0') {
       delete option.where.isActive;
-    }
-
-    if (!query.sortBy || !query.orderBy) {
-      option.sortBy = 'createdAt';
-      option.orderBy = 'DESC';
     }
 
     const [users, total] = await this.userService.findAll(option);
@@ -106,6 +99,17 @@ export class UserController {
     @Body() body: UpdateUserDTO,
   ): Promise<CustomResponse> {
     await this.userService.update(id, body);
+
+    return {
+      data: {},
+      code: '200',
+      message: '',
+    };
+  }
+
+  @Post('/:id/active')
+  async active(@Param('id') id: number, @Body() body: ActiveUserDTO) {
+    await this.userService.active(id, body.isActive);
 
     return {
       data: {},

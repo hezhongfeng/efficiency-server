@@ -12,6 +12,9 @@ export class UserService {
   ) {}
 
   async findAll(option: FindManyOptions): Promise<[User[], number]> {
+    option.order = {
+      createdAt: 'DESC',
+    };
     return await this.userRepository.findAndCount(option);
   }
 
@@ -34,6 +37,16 @@ export class UserService {
     user.isActive = updateUser.isActive;
 
     return await this.userRepository.save(user);
+  }
+
+  async active(id: number, isActive: boolean) {
+    const user = await this.userRepository.findOne({
+      where: {
+        id,
+      },
+    });
+    user.isActive = isActive;
+    await this.userRepository.save(user);
   }
 
   async delete(ids: number[]) {
