@@ -5,16 +5,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { config } from 'dotenv';
 import { Work } from './work/work.entity';
 import { User } from './user/user.entity';
-import { WorkModule } from './work/work.module';
-import { UserModule } from './user/user.module';
+// import { WorkModule } from './work/work.module';
+// import { UserModule } from './user/user.module';
 
 // 读取 .env 文件
 const envConfig = config();
 
 @Module({
   imports: [
-    WorkModule,
-    UserModule,
+    // WorkModule,
+    // UserModule,
     TypeOrmModule.forRoot({
       ssl: Boolean(envConfig.parsed.DB_SSL || process.env.DB_SSL),
       type: 'postgres',
