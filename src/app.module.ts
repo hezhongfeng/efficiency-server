@@ -3,7 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { config } from 'dotenv';
-import { Userr } from './user.entity';
+import { Work } from './work/work.entity';
+import { User } from './user/user.entity';
 
 // 读取 .env 文件
 const envConfig = config();
@@ -18,7 +19,7 @@ const envConfig = config();
       username: envConfig.parsed.DB_USER || process.env.DB_USER,
       password: envConfig.parsed.DB_PASSWORD || process.env.DB_PASSWORD,
       database: envConfig.parsed.DB_DB || process.env.DB_DB,
-      entities: [Userr],
+      entities: [User,Work],
       synchronize: true,
     }),
   ],
