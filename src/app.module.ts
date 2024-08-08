@@ -2,20 +2,14 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Userr } from './user.entity';
-// import { User } from './user/user.entity';
-// import { Work } from './work/work.entity';
-// import { UserModule } from './user/user.module';
-// import { WorkModule } from './work/work.module';
 import { config } from 'dotenv';
+import { Userr } from './user.entity';
 
 // 读取 .env 文件
 const envConfig = config();
 
 @Module({
   imports: [
-    // UserModule,
-    // WorkModule,
     TypeOrmModule.forRoot({
       ssl: Boolean(envConfig.parsed.DB_SSL || process.env.DB_SSL),
       type: 'postgres',
