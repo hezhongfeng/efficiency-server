@@ -9,9 +9,9 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { CreateUserDTO, UpdateUserDTO, ActiveUserDTO } from './user.dto';
-import { ListAllEntities, deleteIds } from 'src/common/dto';
+import { ListAllEntities, deleteIds } from '../common/dto';
 import { UserService } from './user.service';
-import { CustomResponse } from 'src/common/http.response';
+import { CustomResponse } from '../common/http.response';
 import { User } from './user.entity';
 import { Like } from 'typeorm';
 
